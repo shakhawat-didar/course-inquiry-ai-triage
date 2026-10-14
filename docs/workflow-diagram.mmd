@@ -1,0 +1,21 @@
+flowchart TD
+    A[POST Webhook: course-inquiry] --> B{Phone and message present?}
+    B -- No --> C[Log validation failure to Google Sheets]
+    C --> D[Respond HTTP 400]
+    B -- Yes --> E[Prepare inquiry fields<br/>Mask phone number]
+    E --> F[Google Gemini<br/>Classify intent, score lead,<br/>detect language, draft Bangla reply]
+    F --> G[Parse and validate model JSON]
+    G -- Invalid / error --> H[Fallback Response node<br/>Needs response-path verification]
+    G -- Valid --> I[Set routing thresholds<br/>Hot >= 7; Medium >= 4]
+    I --> J[Log all runs to Google Sheets]
+    I --> K{Complaint or human needed?}
+    K -- Yes --> L[Slack support escalation]
+    K -- No --> M{Lead score >= 7?}
+    M -- Yes --> N[Slack hot-lead alert]
+    N --> O[Append to Hot sheet]
+    M -- No --> P{Lead score >= 4?}
+    P -- Yes --> Q[Append to Medium sheet]
+    Q --> R[Gmail action<br/>Confirm send vs draft in node settings]
+    P -- No --> S{Intent = spam?}
+    S -- Yes --> T[Append to Spam sheet]
+    S -- No --> U[Low/Other logging node<br/>Column mapping needs review]

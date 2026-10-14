@@ -1,0 +1,9 @@
+{
+  "intent": "price",
+  "lead_score": 8,
+  "language": "bn",
+  "summary": "The learner asks about course fees and installment options.",
+  "suggested_reply": "কোর্সের ফি ও পেমেন্টের বিকল্প সম্পর্কে বিস্তারিত জানাতে আমাদের টিমের সঙ্গে যোগাযোগ করুন।",
+  "needs_human": false,
+  "_note": "Illustrative only. Replace with a real sanitized execution result before claiming verified behavior."
+}
